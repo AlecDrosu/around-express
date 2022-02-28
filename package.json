@@ -21,11 +21,11 @@
   "homepage": "https://github.com/AlecDrosu/around-express#readme",
   "devDependencies": {
     "eslint": "^8.10.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4",
     "express": "^4.17.3"
   }
 }
