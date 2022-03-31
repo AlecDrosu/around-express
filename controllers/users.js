@@ -50,7 +50,7 @@ const getUser = (req, res) => {
 
 const updateUserInfo = (req, res) => {
   User.findByIdAndUpdate(
-    req.params.userId,
+    req.user._id,
     {
       $addToSet: {
         name: req.body.name,
@@ -58,6 +58,7 @@ const updateUserInfo = (req, res) => {
       },
     },
     { new: false },
+    { runValidators: true },
   )
 
     .then((user) => {
@@ -70,6 +71,8 @@ const updateUserInfo = (req, res) => {
     .catch((err) => {
       if (err.name === "CastError") {
         res.status(INVALID_DATA).send({ message: "Invalid User ID" });
+      } else if (err.name === "ValidationError") {
+        res.status(INVALID_DATA).send({ message: "Invalid data" });
       } else {
         res.status(ERROR).send({ message: "There was an unexpected error" });
       }
@@ -78,13 +81,14 @@ const updateUserInfo = (req, res) => {
 
 const updateUserAvatar = (req, res) => {
   User.findByIdAndUpdate(
-    req.params.userId,
+    req.user._id,
     {
       $addToSet: {
         avatar: req.body.avatar,
       },
     },
     { new: false },
+    { runValidators: true },
   )
     .then((user) => {
       if (!user) {
@@ -96,6 +100,8 @@ const updateUserAvatar = (req, res) => {
     .catch((err) => {
       if (err.name === "CastError") {
         res.status(INVALID_DATA).send({ message: "Invalid user id" });
+      } else if (err.name === "ValidationError") {
+        res.status(INVALID_DATA).send({ message: "Invalid data" });
       } else {
         res.status(ERROR).send({ message: "There was an unexpected error" });
       }
