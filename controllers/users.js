@@ -52,15 +52,16 @@ const updateUserInfo = (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
     {
-      $addToSet: {
+      $set: {
         name: req.body.name,
         about: req.body.about,
       },
     },
-    { new: false },
-    { runValidators: true },
+    {
+      new: false,
+      runValidators: true,
+    },
   )
-
     .then((user) => {
       if (!user) {
         res.status(NOT_FOUND).send({ message: "User not found" });
@@ -80,15 +81,17 @@ const updateUserInfo = (req, res) => {
 };
 
 const updateUserAvatar = (req, res) => {
-  User.findByIdAndUpdate(
+  User.findByIdUpdate(
     req.user._id,
     {
-      $addToSet: {
+      $set: {
         avatar: req.body.avatar,
       },
     },
-    { new: false },
-    { runValidators: true },
+    {
+      new: false,
+      runValidators: true,
+    },
   )
     .then((user) => {
       if (!user) {
